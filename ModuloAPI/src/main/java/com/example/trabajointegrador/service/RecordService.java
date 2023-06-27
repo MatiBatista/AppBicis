@@ -60,7 +60,7 @@ public class RecordService implements IRecordService{
     }
 
     public void editarRecord(RecordDto2 record) {
-        Record record1 = recordRepository.findRecordByUser_UsernameAndSoport_Name(record.getNombreUsuario(), record.getNombreUsuario());
+        Record record1 = recordRepository.findRecordByUser_UsernameAndSoport_Name(record.getNombreUsuario(), record.getNombreSoporte());
         record1.setEndDateTime(LocalDateTime.now());
 
         recordRepository.save(record1);
