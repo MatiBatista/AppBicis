@@ -1,7 +1,9 @@
 package com.example.trabajointegrador.controllers;
 
 import com.example.trabajointegrador.dto.UserDto;
+import com.example.trabajointegrador.entities.Role;
 import com.example.trabajointegrador.entities.User;
+import com.example.trabajointegrador.repository.RoleRepository;
 import com.example.trabajointegrador.repository.UserRepository;
 import com.example.trabajointegrador.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,18 @@ public class UserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     @PostMapping("/public/user")
     public void addUser(@RequestBody User user){
 
         String hash = passwordEncoder.encode(user.getPassword());
 
         user.setPassword(hash);
+
+        Role role = roleRepository.findRoleByName("user");
+        user.setRole(role);
 
         userService.addUser(user);
     }

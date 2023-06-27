@@ -18,4 +18,6 @@ public interface RecordRepository extends JpaRepository<Record, Integer> {
     @Query(value = "select new com.example.trabajointegrador.dto.RecordUser(u.name,u.lastName,r.startDateTime,r.endDateTime) from User u " +
             "inner join Record r on u.idUser=r.user.idUser")
     List<RecordUser> findRecordUser();
+
+    Record findRecordByUser_UsernameAndSoport_Name(String nombreUsuario,String nombreSoporte);
 }

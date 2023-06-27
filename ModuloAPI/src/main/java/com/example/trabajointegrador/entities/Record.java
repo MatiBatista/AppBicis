@@ -1,7 +1,9 @@
 package com.example.trabajointegrador.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 @Table(name = "record")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Record {
 
     @Id
