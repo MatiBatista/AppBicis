@@ -13,4 +13,6 @@ public interface IUserService {
     List<User> findAllUsers();
 
     void delete(User user);
+
+    void darRolAdmin(String nombreUSuario);
 }
