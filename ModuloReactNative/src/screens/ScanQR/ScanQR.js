@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Modal, Pressable } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 const ScanQR = ({navigation}) => {
+
+
+    const URI = `http://192.168.0.20:8081/user/record`
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [user, setUser] = useState('');
@@ -32,6 +36,18 @@ const ScanQR = ({navigation}) => {
       // Function to get the value from AsyncStorage
       const key_token = await AsyncStorage.getItem('token')
       console.log('token: ',key_token)
+    }
+
+    const postRecord = async () => {
+      // Function to get the value from AsyncStorage
+      const keytoken = await AsyncStorage.getItem('token')
+      const key_user = await AsyncStorage.getItem('user')
+      const results = await axios.post(`${URI}`,{ nombreUsuario: key_user,
+      nombreSoporte: soport} ,{headers:{ 'Authorization': `Bearer ${keytoken}` }})
+      console.log(results.status, 'a')
+      setModalVisible(!modalVisible)
+      alert('Se inció estacionamiento')
+      navigation.navigate('Inicio')
     }
   
     const handleBarCodeScanned = ({ type, data }) => {
@@ -71,7 +87,7 @@ const ScanQR = ({navigation}) => {
                 <View style={styles.modalView1}>  
                   <Pressable
                     style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}>
+                    onPress={() =>  postRecord()/* setModalVisible(!modalVisible) */}>
                     <Text style={styles.textStyle}> Si   </Text>
                   </Pressable>
                   <Pressable
