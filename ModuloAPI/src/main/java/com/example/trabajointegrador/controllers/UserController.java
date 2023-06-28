@@ -61,4 +61,9 @@ public class UserController {
         userService.delete(user);
     }
 
+    @PutMapping("/admin/user/rol/{nombreUsuario}")
+    public void rolAdmin(@PathVariable String nombreUSuario){
+        userService.darRolAdmin(nombreUSuario);
+    }
+
 }
