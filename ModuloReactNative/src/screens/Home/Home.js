@@ -88,7 +88,7 @@ const Home = ({navigation}) => {
                 </View>
             {startDateTime == '' ? <Text></Text> : 
             <>
-            <View style={styles.sectionStyle}>
+            {/* <View style={styles.sectionStyle}>
                 <Stopwatch
                     laps
                     msecs
@@ -118,7 +118,7 @@ const Home = ({navigation}) => {
                     }}>
                     <Text style={styles.buttonText}>RESET</Text>
                 </TouchableHighlight>
-                </View>
+                </View> */}
                 <Text style={styles.text}>Estacionamiento Activo</Text>
                 <Text style={styles.text}>{soporte}</Text>
                 <Text style={styles.text}>{startDateTime}</Text>
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     },
 
 
-    sectionStyle: {
+  /*   sectionStyle: {
         flex: 1,
         marginTop: 32,
         alignItems: 'center',
@@ -175,10 +175,10 @@ const styles = StyleSheet.create({
       buttonText: {
         fontSize: 20,
         marginTop: 10,
-      },
+      }, */
 })
 
-const options = {
+/* const options = {
     container: {
       backgroundColor: '#FF0000',
       padding: 5,
@@ -191,6 +191,6 @@ const options = {
       color: '#FFF',
       marginLeft: 7,
     },
-  };
+  }; */
 
 export default Home;
