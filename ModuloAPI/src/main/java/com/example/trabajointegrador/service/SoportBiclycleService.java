@@ -18,4 +18,8 @@ public class SoportBiclycleService implements ISoportBiclycleService {
     public void delete(SoportBiclycle soportBiclycle) {
         soportRepository.delete(soportBiclycle);
     }
+
+    public boolean getSoporteHabilitado(String nombreSoporte) {
+        return soportRepository.findSoportBiclycleByName(nombreSoporte).isHabilitado();
+    }
 }

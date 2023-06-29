@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SoportBiclycleRepository extends JpaRepository<SoportBiclycle, Long> {
 
     SoportBiclycle findSoportBiclycleByName(String nombre);
+
 }

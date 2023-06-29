@@ -16,4 +16,7 @@ public class SoportBiclycle {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "habilitado")
+    private boolean habilitado;
 }

@@ -6,4 +6,6 @@ public interface ISoportBiclycleService {
     void addSoport(SoportBiclycle soportBiclycle);
 
     void delete(SoportBiclycle soportBiclycle);
+
+    boolean getSoporteHabilitado(String nombreSoporte);
 }
