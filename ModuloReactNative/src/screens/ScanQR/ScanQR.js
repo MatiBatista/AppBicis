@@ -13,7 +13,8 @@ const ScanQR = ({navigation}) => {
     const [user, setUser] = useState('');
     const [soport, setSoport] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-  
+    const [endDateTime, setEndDateTime] = useState(null)
+    
     useEffect(() => {
       const getBarCodeScannerPermissions = async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -42,20 +43,40 @@ const ScanQR = ({navigation}) => {
       // Function to get the value from AsyncStorage
       const keytoken = await AsyncStorage.getItem('token')
       const key_user = await AsyncStorage.getItem('user')
-      const results = await axios.post(`${URI}`,{ nombreUsuario: key_user,
-      nombreSoporte: soport} ,{headers:{ 'Authorization': `Bearer ${keytoken}` }})
-      console.log(results.status, 'a')
+      await axios.post(`${URI}`,{ nombreUsuario: key_user,
+      nombreSoporte: soport} ,{headers:{ 'Authorization': `Bearer ${keytoken}` }}).then((res) => {
+        console.log("RESPONSE RECEIVED: ", res);
+      })
+      .catch((err) => {
+        console.log("AXIOS ERROR: ", err.data);
+        alert('Error Axios')
+      })
       setModalVisible(!modalVisible)
       alert('Se inció estacionamiento')
-      navigation.navigate('Inicio')
+      navigation.push('Home')
+    }
+
+    const ValidarRecordActivo = async () => {
+      // Function to get the value from AsyncStorage
+      const key_user = await AsyncStorage.getItem('user')
+      const keytoken = await AsyncStorage.getItem('token')
+      const results = await axios.get(`${URI}/${key_user}`, {headers:{ 'Authorization': `Bearer ${keytoken}` }})
+      const data = await results.data
+      const lastRecord = await data[data.length - 1]
+      setEndDateTime(lastRecord.endDateTime)
     }
   
     const handleBarCodeScanned = ({ type, data }) => {
       setScanned(true);
-      setSoport(data);
-      setModalVisible(true);
+      ValidarRecordActivo()
+      console.log('endDateTime',endDateTime)
+      if (endDateTime == null){
+        alert(`Tenes un estacionamiento activo`);
+      } else{  
+        setSoport(data);
+        setModalVisible(true);
+      }
       /* alert(`Se escaneo el codigo tipo: ${type} y dato: ${data}`); */
-      /* navigation.navigate('Inicio'); */
     };
   
     if (hasPermission === null) {

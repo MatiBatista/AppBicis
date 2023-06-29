@@ -37,16 +37,6 @@ const Home = ({navigation}) => {
             getRecord()
     },[])
 
-    const onSignOutPresed = async () => {
-        navigation.navigate('Login')
-        clearAllData()
-    }
-
-    const clearAllData = () => {
-        AsyncStorage.getAllKeys()
-            .then(keys => AsyncStorage.multiRemove(keys))
-    }
-
     const getUser = async () => {
         // Function to get the value from AsyncStorage
         const key_user = await AsyncStorage.getItem('user')
