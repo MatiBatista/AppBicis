@@ -2,6 +2,7 @@ package com.example.trabajointegrador.controllers;
 
 
 import com.example.trabajointegrador.entities.SoportBiclycle;
+import com.example.trabajointegrador.repository.SoportBiclycleRepository;
 import com.example.trabajointegrador.service.ISoportBiclycleService;
 import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class SoportBiclycleController {
     @Autowired
     ISoportBiclycleService soportService;
 
+    @Autowired
+    SoportBiclycleRepository soportBiclycleRepository;
+
     @PostMapping("/admin/soport")
     public void addSoport(@RequestBody SoportBiclycle soportBiclycle){
         soportService.addSoport(soportBiclycle);
@@ -24,14 +28,16 @@ public class SoportBiclycleController {
         soportService.delete(soportBiclycle);
     }
 
-    @GetMapping("/public/soport/{nombreSoporte}")
+    @GetMapping("/user/soport/{nombreSoporte}")
     public ResponseEntity<?> getSoporteHabilitado(@PathVariable String nombreSoporte) {
-        boolean soporteHabilitado = soportService.getSoporteHabilitado(nombreSoporte);
 
-        if (soporteHabilitado) {
-            Boolean recurso = true;
+        SoportBiclycle soportBiclycle= soportBiclycleRepository.findSoportBiclycleByName(nombreSoporte);
 
-            return ResponseEntity.ok(recurso);
+
+        if (soportBiclycle!=null) {
+            boolean soporteHabilitado = soportService.getSoporteHabilitado(nombreSoporte);
+
+            return ResponseEntity.ok(soporteHabilitado);
         } else {
             return ResponseEntity.noContent().build();
         }
