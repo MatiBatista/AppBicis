@@ -5,12 +5,14 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import Logo from "../../../assets/Recurso3.png"
 //import { useNavigate } from 'react-router-native';
 import axios from "axios";
+import { BASE_URL } from '../../url.js'
+
 
 
 
 const Register = ({navigation}) => {
 
-    const URI = `http://192.168.0.20:8081/public/user`
+    const URI = `http://${BASE_URL}:8081/public/user`
 
     const [user, setUser] = useState('')
     const [pass, setPass] = useState('')

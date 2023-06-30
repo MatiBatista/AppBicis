@@ -43,7 +43,7 @@ public class SoportBiclycleController {
         }
     }
 
-    @PutMapping("/user/suport/{nombreSoporte}")
+    @PutMapping("/user/soport/{nombreSoporte}")
     public void habilitarSoporte(@PathVariable String nombreSoporte){
         soportService.habilitar(nombreSoporte);
     }

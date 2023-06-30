@@ -25,7 +25,11 @@ public class SoportBiclycleService implements ISoportBiclycleService {
 
     public void habilitar(String nombreSoporte) {
         SoportBiclycle soportBiclycle = soportRepository.findSoportBiclycleByName(nombreSoporte);
-        soportBiclycle.setHabilitado(true);
+        if (soportBiclycle.isHabilitado() == true) {
+            soportBiclycle.setHabilitado(false);
+        }else if (soportBiclycle.isHabilitado() == false){
+            soportBiclycle.setHabilitado(true);
+        }
         soportRepository.save(soportBiclycle);
     }
 }

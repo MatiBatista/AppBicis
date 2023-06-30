@@ -11,6 +11,7 @@ import { Redirect, Route, Routes, NativeRouter,  useNavigate  } from 'react-rout
 import { StatusBar } from 'expo-status-bar';
 import axios from "axios";
 import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
+import { BASE_URL } from '../../url.js'
 
 
 
@@ -23,7 +24,8 @@ const Home = ({navigation}) => {
     const [key_token, setKey_token] = useState('')
     const [startDateTime, setStartDateTime] = useState('')
     const [soporte, setSoporte] = useState('')
-    const URI = `http://192.168.0.20:8081/user/record/`
+    const URI = `http://${BASE_URL}:8081/user/record/`
+    console.log(URI)
 
     const [isTimerStart, setIsTimerStart] = useState(false);
     const [isStopwatchStart, setIsStopwatchStart] = useState(false);
@@ -52,14 +54,21 @@ const Home = ({navigation}) => {
     }
 
     const getRecord = async () => {
-        const key_user = await AsyncStorage.getItem('user')
-        const keytoken = await AsyncStorage.getItem('token')
-        const results = await axios.get(`${URI}${key_user}`, {headers:{ 'Authorization': `Bearer ${keytoken}` }})
-        const data = await results.data
-        const lastRecord = await data[data.length - 1]
-        if(lastRecord.endDateTime == null){
-            setStartDateTime(lastRecord.startDateTime)
-            setSoporte(lastRecord.soportName)
+        try{
+            const key_user = await AsyncStorage.getItem('user')
+            const keytoken = await AsyncStorage.getItem('token')
+            const results = await axios.get(`${URI}${key_user}`, {headers:{ 'Authorization': `Bearer ${keytoken}` }})
+            const data = await results.data
+            console.log(data)
+            const lastRecord = await data[data.length - 1]
+            console.log(lastRecord)
+            if(lastRecord.endDateTime == null){
+                setStartDateTime(lastRecord.startDateTime)
+                setSoporte(lastRecord.soportName)
+            } 
+        }
+        catch (err){
+            console.log(err)
         }
     }
 

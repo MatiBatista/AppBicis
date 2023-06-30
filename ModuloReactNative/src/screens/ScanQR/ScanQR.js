@@ -3,17 +3,22 @@ import { Text, View, StyleSheet, Button, Modal, Pressable } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
+import { BASE_URL } from '../../url.js'
 
 const ScanQR = ({navigation}) => {
 
 
-    const URI = `http://192.168.0.20:8081/user/record`
+    const URI = `http://${BASE_URL}:8081/user/record`
+    const URI2 = `http://${BASE_URL}:8081/user/soport/`
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [user, setUser] = useState('');
     const [soport, setSoport] = useState('');
+    const [soportQR, setSoportQR] = useState('');
+    const [valsoport, setValSoport] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-    const [endDateTime, setEndDateTime] = useState(null)
+    const [modalVisible1, setModalVisible1] = useState(false);
+    const [endDateTime, setEndDateTime] = useState('')
     
     useEffect(() => {
       const getBarCodeScannerPermissions = async () => {
@@ -22,8 +27,8 @@ const ScanQR = ({navigation}) => {
       };
       getUser()
       getToken()
-  
       getBarCodeScannerPermissions();
+      ValidarRecordActivo()
     }, []);
 
     const getUser = async () => {
@@ -39,40 +44,115 @@ const ScanQR = ({navigation}) => {
       console.log('token: ',key_token)
     }
 
+    const validarSoporte = async (data) => {
+      try{
+        const keytoken = await AsyncStorage.getItem('token')
+        console.log('validarSoport data', data)
+        results = await axios.get(`${URI2}${data}`,{headers:{ 'Authorization': `Bearer ${keytoken}` }})//.then(res=> console.log(res)).catch(err => console.log(err))
+        //return results.status
+        return results.data
+      }
+      catch (err){
+        return console.log(err)
+      }
+    }
+
+     const putSoport = async (data) => {
+      try{
+        const keytoken = await AsyncStorage.getItem('token')
+        results = await axios.put(`${URI2}${data}`,null,{headers:{ 'Authorization': `Bearer ${keytoken}` }})//.then(res=> console.log(res)).catch(err => console.log(err))
+        console.log(results.status,'1')
+        console.log(results.data, '2')
+        return results.data
+      }
+      catch (err){
+        return console.log(err, 'putSoport')
+      }
+    } 
+
     const postRecord = async () => {
       // Function to get the value from AsyncStorage
       const keytoken = await AsyncStorage.getItem('token')
       const key_user = await AsyncStorage.getItem('user')
+      await putSoport(soportQR)
+      console.log('soportQR', soportQR)
       await axios.post(`${URI}`,{ nombreUsuario: key_user,
-      nombreSoporte: soport} ,{headers:{ 'Authorization': `Bearer ${keytoken}` }}).then((res) => {
+      nombreSoporte: soportQR} ,{headers:{ 'Authorization': `Bearer ${keytoken}` }}).then((res) => {
         console.log("RESPONSE RECEIVED: ", res);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err.data);
-        alert('Error Axios')
+        console.log("AXIOS ERROR: ", err);
       })
       setModalVisible(!modalVisible)
       alert('Se inció estacionamiento')
       navigation.push('Home')
     }
 
-    const ValidarRecordActivo = async () => {
+    const putRecord = async () => {
       // Function to get the value from AsyncStorage
-      const key_user = await AsyncStorage.getItem('user')
       const keytoken = await AsyncStorage.getItem('token')
-      const results = await axios.get(`${URI}/${key_user}`, {headers:{ 'Authorization': `Bearer ${keytoken}` }})
-      const data = await results.data
-      const lastRecord = await data[data.length - 1]
-      setEndDateTime(lastRecord.endDateTime)
+      const key_user = await AsyncStorage.getItem('user')
+      await axios.put(`${URI}`,{ nombreUsuario: key_user,
+      nombreSoporte: soportQR} ,{headers:{ 'Authorization': `Bearer ${keytoken}` }}).then((res) => {
+        console.log("RESPONSE RECEIVED: ", res);
+      })
+      .catch((err) => {
+        console.log("AXIOS ERROR: ", err);
+      })
+      await putSoport(soportQR)
+      setModalVisible1(!modalVisible1)
+      alert('Se finalizo estacionamiento')
+      navigation.push('Home')
+    }
+
+    const ValidarRecordActivo = async () => {
+      try{
+
+        // Function to get the value from AsyncStorage
+        const key_user = await AsyncStorage.getItem('user')
+        const keytoken = await AsyncStorage.getItem('token')
+        const results = await axios.get(`${URI}/${key_user}`, {headers:{ 'Authorization': `Bearer ${keytoken}` }})
+        const data = await results.data
+        console.log(data)
+        const lastRecord = await data[data.length - 1]
+        const endDT = await lastRecord.endDateTime
+        const SoportActual = await lastRecord.soportName
+        setEndDateTime(endDT)
+        if (endDT == null){
+          setSoport(SoportActual)
+        }
+        //return endDT, SoportActual
+        //console.log('Actualiza EndDateTime', endDateTime)
+      }
+      catch (error){
+        console.log(error)
+      }
     }
   
-    const handleBarCodeScanned = ({ type, data }) => {
+    const handleBarCodeScanned = async ({ type, data }) => {
       setScanned(true);
-      ValidarRecordActivo()
-      console.log('endDateTime',endDateTime)
-      if (endDateTime == null){
-        alert(`Tenes un estacionamiento activo`);
-      } else{  
+      const vs = await validarSoporte(data);
+      setValSoport(vs)
+      setSoportQR(data)
+      console.log('vs',vs)
+      console.log('soporte', soport)
+      console.log('data',data)
+      await ValidarRecordActivo();
+      console.log('soporte',soport)
+      if (vs === ''){
+        return alert(`Soporte Incorrecto`)
+      }
+      if (vs == false && soport != data){
+        return alert(`Soporte Ocupado`)
+      }
+      if (endDateTime == null && soport != data){
+        return alert(`Tenes un estacionamiento activo en ${soport}`);
+      } 
+      if(endDateTime == null && soport == data) {
+        setSoport(data);
+        setModalVisible1(true);
+      }
+      if ((endDateTime !== null || endDateTime === '') && vs == true){  
         setSoport(data);
         setModalVisible(true);
       }
@@ -114,6 +194,32 @@ const ScanQR = ({navigation}) => {
                   <Pressable
                     style={[styles.button, styles.buttonClose]}
                     onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.textStyle}> No  </Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible1}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible1(!modalVisible1);
+            }}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>Finalizar estacionamiento de la bicicleta? {soport}</Text>
+                <View style={styles.modalView1}>  
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() =>  putRecord()/* setModalVisible(!modalVisible) */}>
+                    <Text style={styles.textStyle}> Si   </Text>
+                  </Pressable>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible1(!modalVisible1)}>
                     <Text style={styles.textStyle}> No  </Text>
                   </Pressable>
                 </View>
