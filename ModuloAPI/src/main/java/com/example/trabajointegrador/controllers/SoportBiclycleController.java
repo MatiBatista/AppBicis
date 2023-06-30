@@ -27,4 +27,9 @@ public class SoportBiclycleController {
     public boolean getSoporteHabilitado(@PathVariable String nombreSoporte){
         return soportService.getSoporteHabilitado(nombreSoporte);
     }
+
+    @PutMapping("/user/suport/{nombreSoporte}")
+    public void habilitarSoporte(@PathVariable String nombreSoporte){
+        soportService.habilitar(nombreSoporte);
+    }
 }

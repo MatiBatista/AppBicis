@@ -8,4 +8,6 @@ public interface ISoportBiclycleService {
     void delete(SoportBiclycle soportBiclycle);
 
     boolean getSoporteHabilitado(String nombreSoporte);
+
+    void habilitar(String nombreSoporte);
 }

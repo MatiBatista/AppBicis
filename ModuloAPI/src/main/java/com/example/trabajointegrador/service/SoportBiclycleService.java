@@ -22,4 +22,10 @@ public class SoportBiclycleService implements ISoportBiclycleService {
     public boolean getSoporteHabilitado(String nombreSoporte) {
         return soportRepository.findSoportBiclycleByName(nombreSoporte).isHabilitado();
     }
+
+    public void habilitar(String nombreSoporte) {
+        SoportBiclycle soportBiclycle = soportRepository.findSoportBiclycleByName(nombreSoporte);
+        soportBiclycle.setHabilitado(true);
+        soportRepository.save(soportBiclycle);
+    }
 }
