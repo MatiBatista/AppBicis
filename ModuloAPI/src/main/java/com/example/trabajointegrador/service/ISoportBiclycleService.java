@@ -6,7 +6,7 @@ import com.example.trabajointegrador.entities.SoportBiclycle;
 import java.util.List;
 
 public interface ISoportBiclycleService {
-    void addSoport(SoportBiclycle soportBiclycle);
+    void addSoport();
 
     void delete(SoportBiclycle soportBiclycle);
 

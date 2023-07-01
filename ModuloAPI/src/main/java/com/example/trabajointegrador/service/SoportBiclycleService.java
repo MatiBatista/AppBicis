@@ -15,7 +15,14 @@ public class SoportBiclycleService implements ISoportBiclycleService {
     @Autowired
     SoportBiclycleRepository soportRepository;
 
-    public void addSoport(SoportBiclycle soportBiclycle) {
+    public void addSoport() {
+        List<SoportBiclycle> soportBiclycles  = soportRepository.findAll();
+        SoportBiclycle soportBiclycle = new SoportBiclycle();
+
+        int num = soportBiclycles.size()+1;
+
+        soportBiclycle.setName("SOPORTE"+num);
+        soportBiclycle.setHabilitado(true);
         soportRepository.save(soportBiclycle);
     }
 

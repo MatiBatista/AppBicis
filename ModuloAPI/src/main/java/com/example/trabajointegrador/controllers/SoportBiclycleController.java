@@ -22,8 +22,8 @@ public class SoportBiclycleController {
     SoportBiclycleRepository soportBiclycleRepository;
 
     @PostMapping("/admin/soport")
-    public void addSoport(@RequestBody SoportBiclycle soportBiclycle){
-        soportService.addSoport(soportBiclycle);
+    public void addSoport(){
+        soportService.addSoport();
     }
 
     @DeleteMapping("/admin/soport")
