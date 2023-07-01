@@ -18,7 +18,6 @@ public class SoportBiclycleService implements ISoportBiclycleService {
     public void addSoport() {
         List<SoportBiclycle> soportBiclycles  = soportRepository.findAll();
         SoportBiclycle soportBiclycle = new SoportBiclycle();
-
         int num = soportBiclycles.size()+1;
 
         soportBiclycle.setName("SOPORTE"+num);
