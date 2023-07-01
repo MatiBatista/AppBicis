@@ -7,8 +7,11 @@ import Notification from '../../screens/Notification/Notification';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import React, { useState } from 'react';
+import HomeAdmin from '../../screens/Home/HomeAdmin';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SoportesBicicletas from '../../screens/SoportesBicicletas/SoportesBicicletas';
+import AltaSoporteBici from '../../screens/AltaSoporteBici/AltaSoporteBici';
 
 
 const Tab = createBottomTabNavigator();
@@ -51,19 +54,45 @@ function MyTabs(){
 
 const Stack = createNativeStackNavigator();
 
-export default function Navigation(){
-    return(
-        <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false, /* contentStyle: {backgroundColor: '#1C819F'}  */}}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Home" component={MyTabs} />
-          <Stack.Screen name="Activity" component={Activity} />
-          <Stack.Screen name="Notification" component={Notification} />
-          <Stack.Screen name="ScanQR" component={ScanQR} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    )
-}
+const Navigation = () => {
+  const [role, setRole] = useState(''); // Estado para almacenar el rol
 
-  
+  const handleLogin = (userRole) => {
+    setRole(userRole); // Actualizar el rol al iniciar sesión
+  };
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {role === '' ? (
+          <>
+          <Stack.Screen name="Login">
+            {(props) => <Login {...props} handleLogin={handleLogin} />}
+          </Stack.Screen>
+          <Stack.Screen name="Register" component={Register} />
+          </>
+        ) : (
+          <>
+            {role === 'admin' && (
+              <>
+              <Stack.Screen name="HomeAdmin" component={HomeAdmin} />
+              <Stack.Screen name="SoportesBicicletas" component={SoportesBicicletas} />
+              <Stack.Screen name="AltaSoporteBici" component={AltaSoporteBici} />
+              </>
+            )}
+            {role === 'user' && (
+              <>
+                <Stack.Screen name="Home" component={MyTabs} />
+                <Stack.Screen name="Activity" component={Activity} />
+                <Stack.Screen name="ScanQR" component={ScanQR} />
+                <Stack.Screen name="Notificacion" component={Notification} />
+              </>
+            )}
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default Navigation; 

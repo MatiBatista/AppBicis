@@ -4,12 +4,14 @@ import CustomInput from '../../components/CustomInput/CustonInput';
 import CustomButton from "../../components/CustomButton/CustomButton";
 import Logo from "../../../assets/Recurso3.png"
 import { Redirect, Route, Routes, NativeRouter,  useNavigate  } from 'react-router-native';
+import { NavigationContainer } from '@react-navigation/native';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../../url.js'
+import jwtDecode from 'jwt-decode';
+import Navigation from "../../components/navigation/navigation";
 
-
-const Login = ({navigation}) => {
+const Login = ({ navigation, handleLogin }) => {
 
     const URI = `http://${BASE_URL}:8081/public/authenticate`
 
@@ -29,7 +31,15 @@ const Login = ({navigation}) => {
             if(results.status == 200){  //user == "patogonnet" && pass == "1234"){
                 await AsyncStorage.setItem('user', user)
                 await AsyncStorage.setItem('token', results.data['jwtToken'])
-                navigation.navigate('Home')
+                const decodedToken = jwtDecode(results.data['jwtToken']);
+                const rolUser=decodedToken['rol']['authority'];
+                console.log(rolUser);
+                if(rolUser == "ROLE_admin"){
+                    handleLogin('admin'); // Llamar a la función handleLogin del AppNavigator                  
+                }
+                else if (rolUser == "ROLE_user"){
+                    handleLogin('user');
+                }
             }else {
             console.warn('Not Sign in')
                  }
