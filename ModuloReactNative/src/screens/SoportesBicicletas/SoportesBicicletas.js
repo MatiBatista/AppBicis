@@ -20,6 +20,7 @@ import MyModal from "../modal/modal";
 
 const SoportesBicicletas = ({navigation}) => {
 
+    const [user, setUser] = useState('')
     const [soportesBicis, setSoportesBicis] = useState([]);
     const [key_token, setKey_token] = useState('')
 
@@ -31,11 +32,20 @@ const SoportesBicicletas = ({navigation}) => {
         }
 
     useEffect(() => {
-       getToken();
+      getUser()
+      getToken();
       fetchSoportesBicis();
       console.log(soportesBicis);
     }, []);
-  
+
+
+    const getUser = async () => {
+      // Function to get the value from AsyncStorage
+      const key_user = await AsyncStorage.getItem('user')
+      console.log('usuario: ',key_user)
+      await setUser(key_user)
+    }
+
     const fetchSoportesBicis = async () => {
         const keytoken = await AsyncStorage.getItem('token')
       try {
@@ -65,16 +75,19 @@ const SoportesBicicletas = ({navigation}) => {
 
   
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Soportes de Bicicletas</Text>
-        {soportesBicis.map((soporteBici) => (
-          <CustomButton
+      <>
+        <Nav user={user} navigation={navigation} />
+        <View style={styles.container}>
+          <Text style={styles.title}>Soportes de Bicicletas</Text>
+          {soportesBicis.map((soporteBici) => (
+            <CustomButton
             key={soporteBici.nombre}
             text={soporteBici.nombre} 
             onPress={() => redirigiVisualizarSoporteBici(soporteBici.nombre)}
-          />
-        ))}
-      </View>
+            />
+            ))}
+        </View>
+      </>
     );
   };
   

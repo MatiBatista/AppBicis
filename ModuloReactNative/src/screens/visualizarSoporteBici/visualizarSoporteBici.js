@@ -21,7 +21,7 @@ import QRCode from "react-native-qrcode-svg";
 const VisualizarSoporteBici = ({ route }) => {
     const { variable } = route.params;
     const [key_token, setKey_token] = useState('')
-
+    const [user, setUser] = useState('')
     const getToken = async () => {
         // Function to get the value from AsyncStorage
         const keytoken = await AsyncStorage.getItem('token')
@@ -30,9 +30,16 @@ const VisualizarSoporteBici = ({ route }) => {
         }
 
     useEffect(() => {
-       getToken();
+      getUser()
+      getToken();
     }, []);
   
+    const getUser = async () => {
+      // Function to get the value from AsyncStorage
+      const key_user = await AsyncStorage.getItem('user')
+      console.log('usuario: ',key_user)
+      await setUser(key_user)
+    }
 
     const QRCodeGenerator = ({ data }) => {
       return (
@@ -54,10 +61,13 @@ const VisualizarSoporteBici = ({ route }) => {
 
   
     return (
-      <View style={styles.container}>
-        <Text>{variable}</Text>
-        <QRCodeGenerator data={variable}/>
-      </View>
+      <>
+        <Nav user={user} navigation={navigation} />
+        <View style={styles.container}>
+          <Text>{variable}</Text>
+          <QRCodeGenerator data={variable}/>
+        </View>
+      </>
     );
   };
   

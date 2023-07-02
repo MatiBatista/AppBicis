@@ -8,7 +8,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeAdmin from '../../screens/Home/HomeAdmin';
-import SoportesBicicletas from "../../screens/SoportesBicicletas/SoportesBicicletas"
+import SoportesBicicletas from "../../screens/SoportesBicicletas/SoportesBicicletas";
+import VisualizarSoporteBici from "../../screens/visualizarSoporteBici/visualizarSoporteBici"
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
@@ -64,6 +65,7 @@ export default function Navigation(){
           <Stack.Screen name="ScanQR" component={ScanQR} />
           <Stack.Screen name="HomeAdmin" component={HomeAdmin} />
           <Stack.Screen name="SoportesBicicletas" component={SoportesBicicletas} />
+          <Stack.Screen name="VisualizarSoporteBici" component={VisualizarSoporteBici} />
         </Stack.Navigator>
       </NavigationContainer>
     )
