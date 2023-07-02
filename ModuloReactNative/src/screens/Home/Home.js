@@ -24,7 +24,7 @@ const Home = ({navigation}) => {
     const [startDateTime, setStartDateTime] = useState('')
     const [soporte, setSoporte] = useState('')
     const URI = `http://${BASE_URL}:8081/user/record/`
-    console.log(URI)
+ 
 
     const [isTimerStart, setIsTimerStart] = useState(false);
     const [isStopwatchStart, setIsStopwatchStart] = useState(false);
