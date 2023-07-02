@@ -11,14 +11,6 @@ import HomeAdmin from '../../screens/Home/HomeAdmin';
 import SoportesBicicletas from "../../screens/SoportesBicicletas/SoportesBicicletas.js"
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-<<<<<<< HEAD
-
-=======
-import SoportesBicicletas from '../../screens/SoportesBicicletas/SoportesBicicletas';
-import AltaSoporteBici from '../../screens/AltaSoporteBici/AltaSoporteBici';
-import VisualizarSoporteBici from '../../screens/visualizarSoporteBici/visualizarSoporteBici';
-import MyModal from '../../screens/modal/modal';
->>>>>>> 64a2b52e9451c8c0cb8e51557b7203a4fc996e10
 
 const Tab = createBottomTabNavigator();
 
