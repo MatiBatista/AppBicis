@@ -100,14 +100,14 @@ const SoportesBicicletas = ({navigation}) => {
       padding: 20,
     },
     title: {
-      fontSize: 20,
+      fontSize: 30,
       fontWeight: 'bold',
       marginBottom: 20,
     },
     button: {
       width:"100%",
       marginBottom: 10,
-      marginTop:"10px",
+      marginTop: 10,
       paddingVertical: 10,
       borderRadius: 10,
       backgroundColor: '#CCCCCC',
@@ -115,12 +115,8 @@ const SoportesBicicletas = ({navigation}) => {
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: '4vw',
-    
-        // Tamaño de fuente específico para pantallas más pequeñas
-        '@media (max-width: 600px)': {
-          fontSize: '3vw',
-        },
+        fontSize: 30,
+  
       },
       });
 

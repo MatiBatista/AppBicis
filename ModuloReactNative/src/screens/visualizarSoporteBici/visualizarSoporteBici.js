@@ -18,7 +18,7 @@ import QRCode from "react-native-qrcode-svg";
 
 
 
-const VisualizarSoporteBici = ({ route }) => {
+const VisualizarSoporteBici = ({ route, navigation }) => {
     const { variable } = route.params;
     const [key_token, setKey_token] = useState('')
     const [user, setUser] = useState('')
@@ -87,7 +87,7 @@ const VisualizarSoporteBici = ({ route }) => {
     button: {
       width:"100%",
       marginBottom: 10,
-      marginTop:"10px",
+      marginTop: 10,
       paddingVertical: 10,
       borderRadius: 10,
       backgroundColor: '#CCCCCC',
@@ -95,12 +95,7 @@ const VisualizarSoporteBici = ({ route }) => {
     },
     buttonText: {
         color: '#FFFFFF',
-        fontSize: '4vw',
-    
-        // Tamaño de fuente específico para pantallas más pequeñas
-        '@media (max-width: 600px)': {
-          fontSize: '3vw',
-        },
+        fontSize: 15,
       },
       });
 

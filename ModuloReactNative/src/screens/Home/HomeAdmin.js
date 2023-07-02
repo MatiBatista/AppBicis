@@ -93,21 +93,11 @@ const HomeAdmin = ({navigation}) => {
               marginTop: 30,
               justifyContent: 'center',
               alignItems: 'center',
-          
-              // Estilos específicos para pantallas más pequeñas (ejemplo: hasta 600px de ancho)
-              '@media (max-width: 600px)': {
-                width: '100%',
-                marginTop: 20,
-              },
+        
             },
             buttonText: {
               color: '#FFFFFF',
-              fontSize: '4vw',
-          
-              // Tamaño de fuente específico para pantallas más pequeñas
-              '@media (max-width: 600px)': {
-                fontSize: '3vw',
-              },
+              fontSize: 15,
             },
           })
     
