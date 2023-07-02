@@ -26,7 +26,7 @@ function Nav({navigation, user}) {
             <Image source={Logo1} style={styles.logo1} />
             <Text style={{ color: 'white', alignContent: 'flex-start', alignSelf: 'center', fontSize: 18 }}>Bienvenido: {user}</Text>
             <Pressable style={{ backgroundColor: '#3871F3', alignContent: 'center', width: '20%', padding: 10, marginVertical: 10, borderRadius: 5 }} onPress={onSignOutPresed}>
-                <Text style={{ textAlign: "center" }}>Cerrar Sesion</Text>
+                <Text style={{ textAlign: "center", color: 'white' }}>Cerrar Sesion</Text>
             </Pressable>
         </View>
     );

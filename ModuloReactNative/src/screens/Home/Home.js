@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, Image, Switch, Pressable,TouchableHighlight } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, Switch, Pressable,TouchableHighlight, Alert } from "react-native";
 import CustomInput from '../../components/CustomInput/CustonInput';
 import CustomButton from "../../components/CustomButton/CustomButton";
 import Logo from "../../../assets/Recurso3.png"
@@ -12,8 +12,7 @@ import { StatusBar } from 'expo-status-bar';
 import axios from "axios";
 import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import { BASE_URL } from '../../url.js'
-
-
+import Moment from 'moment';
 
 
 
@@ -72,6 +71,12 @@ const Home = ({navigation}) => {
         }
     }
 
+    const onScanQR = async () => {
+        Alert.alert('Escanear QR del soporte donde esta la bicicleta')
+        navigation.navigate('ScanQR')
+       
+    }
+
 
 
     return(
@@ -82,8 +87,8 @@ const Home = ({navigation}) => {
                 <Image source={Logo} style={styles.logo}/>
                 <Text style={styles.text}>Franja horario bicicletero</Text>
                 <View style={styles.DiaHorario} >
-                    <Text style={{fontSize: 30}}>Lunes a Viernes</Text>
-                    <Text style={{fontSize: 30, fontStyle: "italic"}}>07:00 - 22:30</Text>    
+                    <Text style={{fontSize: 20, color: 'white'}}>Lunes a Viernes de <Text style={{fontSize: 20, fontStyle: "italic", color: 'white'}}>07:00 a 22:30</Text></Text>
+                       
                 </View>
             {startDateTime == '' ? <Text></Text> : 
             <>
@@ -119,9 +124,12 @@ const Home = ({navigation}) => {
                 </TouchableHighlight>
                 </View> */}
                 <Text style={styles.text}>Estacionamiento Activo</Text>
-                <Text style={styles.text}>{soporte}</Text>
-                <Text style={styles.text}>{startDateTime}</Text>
+                <View style={styles.DiaHorario2} >    
+                    <Text style={styles.text2}>Soporte: {soporte}</Text>
+                    <Text style={styles.text2}>Iniciado: {Moment(startDateTime).format('DD/MM/YYYY hh:ss')}</Text>
+                </View>
             </>}
+            {startDateTime == '' ? <CustomButton text="Iniciar Estacionamiento"  onPress={onScanQR}/> : <CustomButton text="Finalizar Estacionamiento" onPress={onScanQR}/>}
             </View>
         </>
     )
@@ -129,18 +137,18 @@ const Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 50,
+        marginTop: 30,
         marginLeft: 30,
         marginRight: 30,
         alignItems: 'center',
         alignContent: 'center'
     },
     logo: {
-        marginTop: 50,
+        marginTop: 20,
         width: '100%',
         height:'100%',
-        maxWidth: 150,
-        maxHeight: 100
+        maxWidth: 75,
+        maxHeight: 50
     },
     out: {
         width: '50%',
@@ -152,17 +160,31 @@ const styles = StyleSheet.create({
     },
     text: {
         marginTop: 15,
-        fontSize: 20
+        fontSize: 20,
+    },
+    text2: {
+        padding: 10,
+        fontSize: 20,
+        color: 'white'
     },
     DiaHorario: {
-        marginTop: 15,
-        backgroundColor: '#1C819F',
+        backgroundColor: '#808080' ,
         alignContent: "center",
         alignItems: "center",
         borderRadius: 10,
-        width: "80%",
-        padding: 5
+        width: "100%",
+        padding: 20,
+        marginVertical:15
     },
+    DiaHorario2: {
+        backgroundColor: '#1C819F' ,
+        alignItems: "flex-start",
+        borderRadius: 10,
+        width: "100%",
+        padding: 30,
+        marginVertical:15
+    },
+
 
 
   /*   sectionStyle: {

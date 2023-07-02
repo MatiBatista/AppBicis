@@ -20,7 +20,9 @@
     "expo": "~48.0.15",
     "expo-barcode-scanner": "~12.3.2",
     "expo-device": "~5.2.1",
+    "expo-haptics": "~12.2.1",
     "expo-status-bar": "~1.4.4",
+    "moment": "^2.29.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
@@ -29,6 +31,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-stopwatch-timer": "^0.0.21",
     "react-native-svg": "13.4.0",
+    "react-native-table-component": "^1.2.2",
     "react-native-web": "~0.18.10",
     "react-router-native": "^6.11.0"
   },

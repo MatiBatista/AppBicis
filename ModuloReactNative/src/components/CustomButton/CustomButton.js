@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white'
     },
+    input: {
+        color: 'white'
+    }
 })
 
 export default CustomButton;

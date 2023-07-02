@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Modal, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Button, Modal, Pressable, Alert  } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 import { BASE_URL } from '../../url.js'
+import * as Haptics from 'expo-haptics';
 
 const ScanQR = ({navigation}) => {
 
@@ -84,7 +85,10 @@ const ScanQR = ({navigation}) => {
         console.log("AXIOS ERROR: ", err);
       })
       setModalVisible(!modalVisible)
-      alert('Se inció estacionamiento')
+      Alert.alert('Se inció estacionamiento')
+      Haptics.notificationAsync(
+        Haptics.NotificationFeedbackType.Success
+      )
       navigation.push('Home')
     }
 
@@ -101,7 +105,10 @@ const ScanQR = ({navigation}) => {
       })
       await putSoport(soportQR)
       setModalVisible1(!modalVisible1)
-      alert('Se finalizo estacionamiento')
+      Alert.alert('Se finalizo estacionamiento')
+      Haptics.notificationAsync(
+        Haptics.NotificationFeedbackType.Success
+      )
       navigation.push('Home')
     }
 
@@ -140,13 +147,13 @@ const ScanQR = ({navigation}) => {
       await ValidarRecordActivo();
       console.log('soporte',soport)
       if (vs === ''){
-        return alert(`Soporte Incorrecto`)
+        return Alert.alert(`Soporte Incorrecto`)
       }
       if (vs == false && soport != data){
-        return alert(`Soporte Ocupado`)
+        return Alert.alert(`Soporte Ocupado`)
       }
       if (endDateTime == null && soport != data){
-        return alert(`Tenes un estacionamiento activo en ${soport}`);
+        return Alert.alert(`Tenes un estacionamiento activo en ${soport}`);
       } 
       if(endDateTime == null && soport == data) {
         setSoport(data);
