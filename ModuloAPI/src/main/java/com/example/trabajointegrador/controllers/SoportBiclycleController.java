@@ -1,6 +1,7 @@
 package com.example.trabajointegrador.controllers;
 
 
+import com.example.trabajointegrador.dto.SoportDto;
 import com.example.trabajointegrador.entities.SoportBiclycle;
 import com.example.trabajointegrador.repository.SoportBiclycleRepository;
 import com.example.trabajointegrador.service.ISoportBiclycleService;
@@ -8,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class SoportBiclycleController {
@@ -19,8 +22,8 @@ public class SoportBiclycleController {
     SoportBiclycleRepository soportBiclycleRepository;
 
     @PostMapping("/admin/soport")
-    public void addSoport(@RequestBody SoportBiclycle soportBiclycle){
-        soportService.addSoport(soportBiclycle);
+    public void addSoport(){
+        soportService.addSoport();
     }
 
     @DeleteMapping("/admin/soport")
@@ -46,5 +49,10 @@ public class SoportBiclycleController {
     @PutMapping("/user/soport/{nombreSoporte}")
     public void habilitarSoporte(@PathVariable String nombreSoporte){
         soportService.habilitar(nombreSoporte);
+    }
+
+    @GetMapping("/admin/soport")
+    public List<SoportDto> getSoportes(){
+        return soportService.getSoports();
     }
 }

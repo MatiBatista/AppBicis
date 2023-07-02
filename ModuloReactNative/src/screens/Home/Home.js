@@ -81,7 +81,6 @@ const Home = ({navigation}) => {
 
     return(
         <>
-            <StatusBar />
             <Nav user={user} navigation={navigation} />
             <View style={styles.container} >
                 <Image source={Logo} style={styles.logo}/>

@@ -7,6 +7,7 @@ import { Redirect, Route, Routes, NativeRouter,  useNavigate  } from 'react-rout
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../../url.js'
+import jwtDecode from 'jwt-decode';
 
 
 const Login = ({navigation}) => {
@@ -29,7 +30,16 @@ const Login = ({navigation}) => {
             if(results.status == 200){  //user == "patogonnet" && pass == "1234"){
                 await AsyncStorage.setItem('user', user)
                 await AsyncStorage.setItem('token', results.data['jwtToken'])
-                navigation.navigate('Home')
+                const decodedToken = jwtDecode(results.data['jwtToken']);
+                const rolUser=decodedToken['rol']['authority'];
+                console.log(rolUser);
+                if(rolUser == "ROLE_admin"){
+                    navigation.navigate('HomeAdmin')    // Llamar a la función handleLogin del AppNavigator
+                }
+                else if (rolUser == "ROLE_user"){
+                    navigation.navigate('Home')
+                }
+                
             }else {
             console.warn('Not Sign in')
                  }

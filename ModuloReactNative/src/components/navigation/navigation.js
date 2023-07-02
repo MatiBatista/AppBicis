@@ -7,6 +7,8 @@ import Notification from '../../screens/Notification/Notification';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeAdmin from '../../screens/Home/HomeAdmin';
+import SoportesBicicletas from "../../screens/SoportesBicicletas/SoportesBicicletas.js"
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -61,6 +63,8 @@ export default function Navigation(){
           <Stack.Screen name="Activity" component={Activity} />
           <Stack.Screen name="Notification" component={Notification} />
           <Stack.Screen name="ScanQR" component={ScanQR} />
+          <Stack.Screen name="HomeAdmin" component={HomeAdmin} />
+          <Stack.Screen name="SoportesBicicletas" component={SoportesBicicletas} />
         </Stack.Navigator>
       </NavigationContainer>
     )
