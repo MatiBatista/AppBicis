@@ -19,5 +19,5 @@ public interface RecordRepository extends JpaRepository<Record, Integer> {
             "inner join Record r on u.idUser=r.user.idUser")
     List<RecordUser> findRecordUser();
 
-    Record findRecordByUser_UsernameAndSoport_Name(String nombreUsuario,String nombreSoporte);
+    List<Record> findRecordsByUser_UsernameAndSoport_NameOrderByIdRecordDesc(String nombreUsuario,String nombreSoporte);
 }
