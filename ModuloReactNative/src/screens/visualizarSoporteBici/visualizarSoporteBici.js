@@ -11,16 +11,15 @@ import { StatusBar } from 'expo-status-bar';
 import axios from "axios";
 import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import { BASE_URL } from '../../url.js'
-import MyModal from "../modal/modal";
+import {openModal} from "../modal/modal";
+import QRCode from "react-native-qrcode-svg";
 
 
 
 
 
-
-const SoportesBicicletas = ({navigation}) => {
-
-    const [soportesBicis, setSoportesBicis] = useState([]);
+const VisualizarSoporteBici = ({ route }) => {
+    const { variable } = route.params;
     const [key_token, setKey_token] = useState('')
 
     const getToken = async () => {
@@ -32,23 +31,17 @@ const SoportesBicicletas = ({navigation}) => {
 
     useEffect(() => {
        getToken();
-      fetchSoportesBicis();
-      console.log(soportesBicis);
     }, []);
   
-    const fetchSoportesBicis = async () => {
-        const keytoken = await AsyncStorage.getItem('token')
-      try {
-        const response = await axios.get(`http://${BASE_URL}:8081/admin/soport`, {
-            headers: {
-              Authorization: `Bearer ${keytoken}`,
-            },
-          });
-        setSoportesBicis(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+
+    const QRCodeGenerator = ({ data }) => {
+      return (
+        <View>
+          <QRCode value={data} size={200} />
+        </View>
+      );
     };
+    
 
     const CustomButton = ({ text, onPress }) => {
         return (
@@ -58,22 +51,12 @@ const SoportesBicicletas = ({navigation}) => {
         );
       };
 
-      const redirigiVisualizarSoporteBici = (nombreSoporte) => {
-        navigation.navigate("VisualizarSoporteBici", { variable: nombreSoporte  });
-      };
-
 
   
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Soportes de Bicicletas</Text>
-        {soportesBicis.map((soporteBici) => (
-          <CustomButton
-            key={soporteBici.nombre}
-            text={soporteBici.nombre} 
-            onPress={() => redirigiVisualizarSoporteBici(soporteBici.nombre)}
-          />
-        ))}
+        <Text>{variable}</Text>
+        <QRCodeGenerator data={variable}/>
       </View>
     );
   };
@@ -111,4 +94,4 @@ const SoportesBicicletas = ({navigation}) => {
       },
       });
 
-export default SoportesBicicletas;
+export default VisualizarSoporteBici;

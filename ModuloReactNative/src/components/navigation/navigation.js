@@ -12,7 +12,8 @@ import HomeAdmin from '../../screens/Home/HomeAdmin';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SoportesBicicletas from '../../screens/SoportesBicicletas/SoportesBicicletas';
 import AltaSoporteBici from '../../screens/AltaSoporteBici/AltaSoporteBici';
-
+import VisualizarSoporteBici from '../../screens/visualizarSoporteBici/visualizarSoporteBici';
+import MyModal from '../../screens/modal/modal';
 
 const Tab = createBottomTabNavigator();
 
@@ -78,6 +79,8 @@ const Navigation = () => {
               <Stack.Screen name="HomeAdmin" component={HomeAdmin} />
               <Stack.Screen name="SoportesBicicletas" component={SoportesBicicletas} />
               <Stack.Screen name="AltaSoporteBici" component={AltaSoporteBici} />
+              <Stack.Screen name="VisualizarSoporteBici" component={VisualizarSoporteBici} />
+              <Stack.Screen name="ModalVisualizarSoporteBici" component={MyModal} />
               </>
             )}
             {role === 'user' && (
