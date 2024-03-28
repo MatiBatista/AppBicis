@@ -10,6 +10,9 @@ COPY . /app
 # Instala las dependencias utilizando npm
 RUN npm install
 
+# Instala expo-cli globalmente
+RUN npm install -g expo-cli
+
 # Exponer el puerto que utiliza tu aplicación
 EXPOSE 19006
 
