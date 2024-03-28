@@ -1,20 +1,17 @@
-# Define la imagen base
+# Usa una imagen base con la última versión estable de Node.js
 FROM node:latest
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el archivo package.json y package-lock.json
-COPY package*.json ./
+# Copia el código fuente de tu aplicación dentro del contenedor
+COPY . /app
 
-# Instala las dependencias del proyecto
+# Instala las dependencias utilizando npm
 RUN npm install
 
-# Copia el resto de los archivos del proyecto
-COPY . .
-
-# Expone el puerto en el que se ejecutará el servidor Expo (opcional si se utiliza expo start --web)
+# Exponer el puerto que utiliza tu aplicación
 EXPOSE 19006
 
-# Comando predeterminado para ejecutar el servidor Expo web
-CMD ["expo", "start", "--web"]
+# Ejecuta el comando para iniciar tu aplicación en modo web
+CMD ["npm", "start"]
