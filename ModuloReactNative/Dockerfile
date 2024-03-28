@@ -1,5 +1,5 @@
-# Usa una imagen base con la última versión estable de Node.js
-FROM node:latest
+# Usa una imagen base con Node.js 18
+FROM node:18
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
