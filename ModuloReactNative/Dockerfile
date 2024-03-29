@@ -17,4 +17,4 @@ RUN npm install -g expo-cli
 EXPOSE 19006
 
 # Ejecuta el comando para iniciar tu aplicación en modo web
-CMD ["expo", "start", "--web", "--port", "19006"]
+CMD ["expo", "start", "--web"]
