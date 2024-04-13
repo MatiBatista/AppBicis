@@ -1,20 +1,20 @@
-# Usa una imagen base con Node.js 18
-FROM node:18
+# Define la imagen base
+FROM node:latest
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el código fuente de tu aplicación dentro del contenedor
-COPY . /app
+# Copia el archivo package.json y package-lock.json
+COPY package*.json ./
 
-# Instala las dependencias utilizando npm
+# Instala las dependencias del proyecto
 RUN npm install
 
-# Instala expo-cli globalmente
-RUN npm install -g expo-cli
+# Copia el resto de los archivos del proyecto
+COPY . .
 
-# Exponer el puerto que utiliza tu aplicación
+# Expone el puerto en el que se ejecutará el servidor Expo (opcional si se utiliza expo start --web)
 EXPOSE 19006
 
-# Ejecuta el comando para iniciar tu aplicación en modo web
+# Comando predeterminado para ejecutar el servidor Expo web
 CMD ["expo", "start", "--web"]
