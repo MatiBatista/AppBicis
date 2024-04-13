@@ -49,7 +49,7 @@ const SoportesBicicletas = ({navigation}) => {
     const fetchSoportesBicis = async () => {
         const keytoken = await AsyncStorage.getItem('token')
       try {
-        const response = await axios.get(`http://${BASE_URL}:8081/admin/soport`, {
+        const response = await axios.get(`${BASE_URL}/admin/soport`, {
             headers: {
               Authorization: `Bearer ${keytoken}`,
             },

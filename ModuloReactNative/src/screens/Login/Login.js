@@ -12,7 +12,7 @@ import jwtDecode from 'jwt-decode';
 
 const Login = ({navigation}) => {
 
-    const URI = `http://${BASE_URL}:8081/public/authenticate`
+    const URI = `${BASE_URL}/public/authenticate`
 
     const [user, setUser] = useState('')
     const [pass, setPass] = useState('')

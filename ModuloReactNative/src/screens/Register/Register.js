@@ -12,7 +12,7 @@ import { BASE_URL } from '../../url.js'
 
 const Register = ({navigation}) => {
 
-    const URI = `http://${BASE_URL}:8081/public/user`
+    const URI = `${BASE_URL}/public/user`
 
     const [user, setUser] = useState('')
     const [pass, setPass] = useState('')

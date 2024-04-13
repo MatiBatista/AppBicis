@@ -23,7 +23,7 @@ const Home = ({navigation}) => {
     const [key_token, setKey_token] = useState('')
     const [startDateTime, setStartDateTime] = useState('')
     const [soporte, setSoporte] = useState('')
-    const URI = `http://${BASE_URL}:8081/user/record/`
+    const URI = `${BASE_URL}/user/record/`
  
 
     const [isTimerStart, setIsTimerStart] = useState(false);

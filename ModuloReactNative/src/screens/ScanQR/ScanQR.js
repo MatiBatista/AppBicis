@@ -9,8 +9,8 @@ import * as Haptics from 'expo-haptics';
 const ScanQR = ({navigation}) => {
 
 
-    const URI = `http://${BASE_URL}:8081/user/record`
-    const URI2 = `http://${BASE_URL}:8081/user/soport/`
+    const URI = `${BASE_URL}/user/record`
+    const URI2 = `${BASE_URL}/user/soport/`
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [user, setUser] = useState('');

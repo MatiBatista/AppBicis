@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "React-Native-App",
-    "slug": "React-Native-App",
+    "slug": "appbicis",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,8 +29,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "69f68f51-413f-41b6-a7d5-d9769bc6e760"
+        "projectId": "2cb30f41-0194-4808-a4ad-5517bc81431a"
       }
-    }
+    },
+    "owner": "matias234"
   }
 }

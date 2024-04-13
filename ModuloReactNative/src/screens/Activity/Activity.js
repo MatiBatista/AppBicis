@@ -14,7 +14,7 @@ import Moment from 'moment';
 const Activity = ({navigation}) => {
 
 
-    const URI = `http://${BASE_URL}:8081/user/record/`
+    const URI = `${BASE_URL}/user/record/`
     const [user, setUser] = useState('')
     const [records, setRecords] = useState([])
     const tableHead = ['Fecha Inicio','Fecha Fin', 'Soporte'];
